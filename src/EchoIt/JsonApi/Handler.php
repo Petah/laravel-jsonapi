@@ -537,7 +537,8 @@ abstract class Handler
     public function handlePostDefault(Request $request, $model)
     {
         $values = $this->parseRequestContent($request->content, $model->getResourceType());
-        $model->fill($values);
+        $attributes = $values['attributes'];
+        $model->fill($attributes);
 
         if (!$model->save()) {
             throw new Exception(
@@ -569,6 +570,7 @@ abstract class Handler
         }
 
         $updates = $this->parseRequestContent($request->content, $model->getResourceType());
+        $attributes = $updates['attributes'];
 
         $model = $model::find($request->id);
         if (is_null($model)) {
@@ -579,7 +581,7 @@ abstract class Handler
         $originalAttributes = $model->getOriginal();
 
         // apply our updates
-        $model->fill($updates);
+        $model->fill($attributes);
 
         // ensure we can get a succesful save
         if (!$model->save()) {
