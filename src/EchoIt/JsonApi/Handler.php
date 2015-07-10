@@ -416,28 +416,65 @@ abstract class Handler
         }
 
         $data = $content['data'];
-        if (!isset($data['type'])) {
-            throw new Exception(
-                '"type" parameter not set in request.',
-                static::ERROR_SCOPE | static::ERROR_INVALID_ATTRS,
-                BaseResponse::HTTP_BAD_REQUEST
-            );
-        }
-        if ($data['type'] !== $type) {
-            throw new Exception(
-                '"type" parameter is not valid. Expecting ' . $type,
-                static::ERROR_SCOPE | static::ERROR_INVALID_ATTRS,
-                BaseResponse::HTTP_CONFLICT
-            );
-        }
-        unset($data['type']);
 
-        if (!isset($data['attributes'])) {
-            throw new Exception(
-                '"attributes" parameter not set in request.',
-                static::ERROR_SCOPE | static::ERROR_INVALID_ATTRS,
-                BaseResponse::HTTP_BAD_REQUEST
-            );
+        if (!isset($data['type'])) {
+            foreach($data as $d) {
+                if (!isset($d['type'])) {
+                    throw new Exception(
+                        '"type" parameter not set in request, and request is not an array.',
+                        static::ERROR_SCOPE | static::ERROR_INVALID_ATTRS,
+                        BaseResponse::HTTP_BAD_REQUEST
+                    );
+                }
+                if ($d['type'] !== $type) {
+                    throw new Exception(
+                        '"type" parameter is not valid. Expecting ' . $type,
+                        static::ERROR_SCOPE | static::ERROR_INVALID_ATTRS,
+                        BaseResponse::HTTP_CONFLICT
+                    );
+                }
+                if ($d['type'] !== $type) {
+                    throw new Exception(
+                        '"type" parameter is not valid. Expecting ' . $type,
+                        static::ERROR_SCOPE | static::ERROR_INVALID_ATTRS,
+                        BaseResponse::HTTP_CONFLICT
+                    );
+                }
+                unset($d['type']);
+
+                if (!isset($d['attributes'])) {
+                    throw new Exception(
+                        '"attributes" parameter not set in request.',
+                        static::ERROR_SCOPE | static::ERROR_INVALID_ATTRS,
+                        BaseResponse::HTTP_BAD_REQUEST
+                    );
+                }
+            }
+        }
+        else {
+            if (!isset($data['type'])) {
+                throw new Exception(
+                    '"type" parameter not set in request.',
+                    static::ERROR_SCOPE | static::ERROR_INVALID_ATTRS,
+                    BaseResponse::HTTP_BAD_REQUEST
+                );
+            }
+            if ($data['type'] !== $type) {
+                throw new Exception(
+                    '"type" parameter is not valid. Expecting ' . $type,
+                    static::ERROR_SCOPE | static::ERROR_INVALID_ATTRS,
+                    BaseResponse::HTTP_CONFLICT
+                );
+            }
+            unset($data['type']);
+
+            if (!isset($data['attributes'])) {
+                throw new Exception(
+                    '"attributes" parameter not set in request.',
+                    static::ERROR_SCOPE | static::ERROR_INVALID_ATTRS,
+                    BaseResponse::HTTP_BAD_REQUEST
+                );
+            }
         }
 
         return $data;
