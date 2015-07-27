@@ -562,7 +562,7 @@ abstract class Handler
                     $results = $model->get();
                 }
                 else {
-                    $result = $model->first();
+                    $results = $model->first();
                 }
             }
         } catch (\Illuminate\Database\QueryException $e) {
