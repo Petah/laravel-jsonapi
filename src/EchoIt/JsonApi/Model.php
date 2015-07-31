@@ -162,12 +162,12 @@ class Model extends \Eloquent
             }
 
             if ($value instanceof BaseModel) {
-                $relations[$relation] = array('linkage' => array('id' => $value->getKey(), 'type' => $value->getResourceType()));
+                $relations[$relation] = ['data' => array('id' => $value->getKey(), 'type' => $value->getResourceType())];
             } elseif ($value instanceof Collection) {
                 $relation = \str_plural($relation);
-                $items = ['linkage' => []];
+                $items = ['data' => []];
                 foreach ($value as $item) {
-                    $items['linkage'][] = array('id' => $item->getKey(), 'type' => $item->getResourceType());
+                    $items['data'][] =['id' => $item->getKey(), 'type' => $item->getResourceType()];
                 }
                 $relations[$relation] = $items;
             }
@@ -194,7 +194,7 @@ class Model extends \Eloquent
 
         return array_merge(
             $attributes,
-            [ 'links' => $relations ]
+            [ 'relationships' => $relations ]
         );
     }
 }
