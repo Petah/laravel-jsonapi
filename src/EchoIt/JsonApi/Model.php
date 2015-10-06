@@ -162,14 +162,14 @@ class Model extends \Eloquent
             }
 
             if ($value instanceof BaseModel) {
-                $relations[$relation] = ['data' => array('id' => $value->getKey(), 'type' => $value->getResourceType())];
+                $relations[snake_case($relation)] = ['data' => array('id' => $value->getKey(), 'type' => $value->getResourceType())];
             } elseif ($value instanceof Collection) {
                 $relation = \str_plural($relation);
                 $items = ['data' => []];
                 foreach ($value as $item) {
-                    $items['data'][] =['id' => $item->getKey(), 'type' => $item->getResourceType()];
+                    $items['data'][] = ['id' => $item->getKey(), 'type' => $item->getResourceType()];
                 }
-                $relations[$relation] = $items;
+                $relations[snake_case($relation)] = $items;
             }
 
             // remove models / collections that we loaded from a method
