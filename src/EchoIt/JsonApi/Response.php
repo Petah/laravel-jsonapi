@@ -62,7 +62,7 @@ class Response
      * @param  string $bodyKey The key on which to set the main response.
      * @return Illuminate\Http\JsonResponse
      */
-    public function toJsonResponse($bodyKey = 'data', $options = JSON_NUMERIC_CHECK)
+    public function toJsonResponse($bodyKey = 'data', $options = 0)
     {
         return new JsonResponse(array_merge(
             [ $bodyKey => $this->body ],
