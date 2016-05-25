@@ -540,7 +540,7 @@ abstract class Handler
     protected function handleGetDefault(Request $request, $model)
     {
         $total = null;
-        if (empty($request->id)) {
+        if (is_null($request->id)) {
             if (!empty($request->filter)) {
                 $model = $this->handleFilterRequest($request->filter, $model);
             }
@@ -552,7 +552,7 @@ abstract class Handler
                 $model = $this->handleSortRequest($request->sort, $model);
             }
         } else {
-            $model = $model->where('id', '=', $request->id);
+            $model = $model->findOrFail($request->id);
         }
 
         try {
