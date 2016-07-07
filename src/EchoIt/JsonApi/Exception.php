@@ -34,4 +34,9 @@ class Exception extends \Exception
     {
         return new ErrorResponse($this->httpStatusCode, $this->code, $this->message, $this->additionalAttrs);
     }
+
+    public function getHttpStatusCode()
+    {
+        return $this->httpStatusCode;
+    }
 }
